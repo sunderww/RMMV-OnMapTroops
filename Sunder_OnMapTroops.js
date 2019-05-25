@@ -37,7 +37,7 @@ SOFTWARE.
 
 var Sunder = Sunder || {};
 Sunder.OMT = Sunder.OMT || {};
-Sunder.OMT.version = '0.1';
+Sunder.OMT.version = '0.2';
 
 var Imported = Imported || {};
 Imported.Sunder_OnMapTroops = Sunder.OMT.version;
@@ -47,7 +47,7 @@ Imported.Sunder_OnMapTroops = Sunder.OMT.version;
  * @plugindesc Allows you to put encounters on map and have information on
  * which troop it is (popup above the event)
  * @author Sunderww
- * @version 0.1
+ * @version 0.2
  *
  * @param alwaysDisplayed
  * @text Always display popup
@@ -99,6 +99,9 @@ Imported.Sunder_OnMapTroops = Sunder.OMT.version;
  * Changelog
  * ===========================================================================
  *
+ * version 0.2:
+ *  - fixed a bug with the parameters that were not working.
+ *
  * version 0.1:
  *  - Always show the window with the basic information. Not much customisation
  * is given, but it works.
@@ -110,11 +113,11 @@ Imported.Sunder_OnMapTroops = Sunder.OMT.version;
 
   let _params = PluginManager.parameters('Sunder_OnMapTroops') || {};
   Sunder.OMT.options = {
-    alwaysDisplayed: _params.alwaysDisplayed || false,
+    alwaysDisplayed: _params.alwaysDisplayed === "true",
     show: {
-      enemies: _params.showEnemies || true,
-      exp: _params.showExp || true,
-      gold: _params.showGold || true
+      enemies: _params.showEnemies === "true",
+      exp: _params.showExp === "true",
+      gold: _params.showGold === "true"
     }
   };
 
@@ -171,6 +174,9 @@ Imported.Sunder_OnMapTroops = Sunder.OMT.version;
     let text = "";
     let totalExp = 0;
     let totalGold = 0;
+
+    console.log(Sunder.OMT.options);
+    console.log(_params);
 
     this._enemies.forEach(function(enemy) {
       if (Sunder.OMT.options.show.enemies) {
